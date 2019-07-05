@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.leicx.mapper.UsersMapper">
+  <resultMap id="BaseResultMap" type="com.leicx.entity.Users">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="wxid" jdbcType="VARCHAR" property="wxid" />
+    <result column="points" jdbcType="BIGINT" property="points" />
+    <result column="desc" jdbcType="VARCHAR" property="desc" />
+    <result column="status" jdbcType="BIT" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="del" jdbcType="BIT" property="del" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="com.leicx.entity.Users">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="USER" jdbcType="CHAR" property="user" />
+    <result column="CURRENT_CONNECTIONS" jdbcType="BIGINT" property="currentConnections" />
+    <result column="TOTAL_CONNECTIONS" jdbcType="BIGINT" property="totalConnections" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="com.leicx.entity.Users">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+  </resultMap>
+</mapper>
