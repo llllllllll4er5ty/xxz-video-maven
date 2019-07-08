@@ -2,7 +2,6 @@ package com.leicx.xxz.controller;
 
 import com.leicx.xxz.entity.UserEntity;
 import com.leicx.xxz.enums.ErrorCodeEnum;
-import com.leicx.xxz.service.RegisterService;
 import com.leicx.xxz.service.UserService;
 import com.leicx.xxz.util.LcxJSONResult;
 import com.leicx.xxz.util.StringUtils;
@@ -15,11 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
  * 用户注册的controller
  */
 @RestController
-@RequestMapping("/register")
-public class RegisterController {
+@RequestMapping("/login")
+public class LoginController {
 
-    @Autowired
-    private RegisterService registerService;
     @Autowired
     private UserService userService;
 
@@ -28,12 +25,9 @@ public class RegisterController {
      * @param userEntity 封装了前端传入属性的用户实体
      * @return
      */
-    @RequestMapping("/save")
-    public LcxJSONResult save(@RequestBody UserEntity userEntity) {
+    @RequestMapping("/doLogin")
+    public LcxJSONResult doLogin(@RequestBody UserEntity userEntity) {
         // 校验用户名和密码
-        if (userEntity == null) {
-            return LcxJSONResult.errorException(ErrorCodeEnum.ERROR_CODE_200001);
-        }
         String name = userEntity.getName();
         String password = userEntity.getPassword();
         if (StringUtils.isEmpty(name) || StringUtils.isEmpty(password)) {
@@ -41,13 +35,12 @@ public class RegisterController {
         }
 
         // 用户校验
-        boolean exists = userService.userExistsByName(name);
-        if (exists) {
-            return LcxJSONResult.errorException(ErrorCodeEnum.ERROR_CODE_200003);
+        userEntity = userService.getUserByNameAndPwd(name, password, 0);
+        boolean exists = userEntity != null;
+        if (!exists) {
+            return LcxJSONResult.errorException(ErrorCodeEnum.ERROR_CODE_200004);
         }
 
-        // 保存用户信息
-        registerService.saveUser(userEntity);
         // 返回
         return LcxJSONResult.ok(userEntity);
     }

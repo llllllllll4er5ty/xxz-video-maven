@@ -7,11 +7,12 @@
     -->
     <result column="id" jdbcType="INTEGER" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="age" jdbcType="INTEGER" property="age" />
     <result column="avatar" jdbcType="VARCHAR" property="avatar" />
     <result column="wxid" jdbcType="VARCHAR" property="wxid" />
     <result column="points" jdbcType="BIGINT" property="points" />
-    <result column="desc" jdbcType="VARCHAR" property="desc" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="status" jdbcType="BIT" property="status" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
@@ -20,9 +21,9 @@
 
   <insert id="insert" parameterType="com.leicx.xxz.entity.UserEntity">
     INSERT INTO users (
-    name,age,avatar,wxid,points,desc,status,create_time,update_time,del
+    name,password,age,avatar,fans_counts,follows_counts,receive_like_counts,wxid,points,description,status,create_time,update_time,del
     ) VALUES (
-    #{name},#{age},#{avatar},#{wxid},#{points},#{desc},#{status},#{createTime},#{updateTime},#{del}
+    #{name},#{password},#{age},#{avatar},#{fansCounts},#{followsCounts},#{receiveLikeCounts},#{wxid},#{points},#{description},#{status},#{createTime},#{updateTime},#{del}
     )
     <selectKey keyProperty="id" resultType="Integer">
       SELECT LAST_INSERT_ID()
@@ -35,11 +36,15 @@
     SET
     <if test="id!=null">id = #{id}</if>
     <if test="name!=null">, name = #{name}</if>
+    <if test="password!=null">, password = #{password}</if>
     <if test="age!=null">, age = #{age}</if>
     <if test="avatar!=null">, avatar = #{avatar}</if>
+    <if test="fansCounts!=null">, fans_counts = #{fansCounts}</if>
+    <if test="followsCounts!=null">, follows_counts = #{followsCounts}</if>
+    <if test="receiveLikeCounts!=null">, receive_like_counts = #{receiveLikeCounts}</if>
     <if test="wxid!=null">, wxid = #{wxid}</if>
     <if test="points!=null">, points = #{points}</if>
-    <if test="desc!=null">, desc = #{desc}</if>
+    <if test="description!=null">, description = #{description}</if>
     <if test="status!=null">, status = #{status}</if>
     <if test="createTime!=null">, create_time = #{createTime}</if>
     <if test="updateTime!=null">, update_time = #{updateTime}</if>
@@ -61,6 +66,13 @@
     users
     <where>
       name = #{name} AND del = #{del}
+    </where>
+  </select>
+  <select id="getUserByNameAndPwd" resultType="com.leicx.xxz.entity.UserEntity">
+    SELECT * FROM
+    users
+    <where>
+      name = #{name} AND password = #{password} AND del = #{del}
     </where>
   </select>
 

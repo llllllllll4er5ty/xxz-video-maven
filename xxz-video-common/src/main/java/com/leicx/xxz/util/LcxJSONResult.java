@@ -1,6 +1,7 @@
 package com.leicx.xxz.util;
 
 
+import com.leicx.xxz.enums.ErrorCodeEnum;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -40,16 +41,16 @@ public class LcxJSONResult {
         return new LcxJSONResult(o);
     }
 
-//    public static LcxJSONResult errorException(String msg) {
-//        return new LcxJSONResult(ERROR_CODE, msg);
-//    }
-//
-//    public static LcxJSONResult errorException(ErrorCodeEnum errorCodeEnum) {
-//        return new LcxJSONResult(errorCodeEnum.getCode(), errorCodeEnum.getMsg());
-//    }
-//
-//    public static LcxJSONResult errorException(ErrorCodeEnum errorCodeEnum, String msg) {
-//        return new LcxJSONResult(errorCodeEnum.getCode(), errorCodeEnum.getMsg() + ":" + msg);
-//    }
+    public static LcxJSONResult errorException(String msg) {
+        return new LcxJSONResult(ERROR_CODE, msg);
+    }
+
+    public static LcxJSONResult errorException(ErrorCodeEnum errorCodeEnum) {
+        return new LcxJSONResult(errorCodeEnum.getCode(), errorCodeEnum.getMsg());
+    }
+
+    public static LcxJSONResult errorException(ErrorCodeEnum errorCodeEnum, String msg) {
+        return new LcxJSONResult(errorCodeEnum.getCode(), errorCodeEnum.getMsg() + ":" + msg);
+    }
 
 }

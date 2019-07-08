@@ -1,5 +1,7 @@
 package com.leicx.xxz.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -63,12 +65,12 @@ public class UserEntity {
     /**
      * 用户个人介绍
      */
-    private String desc;
+    private String description;
 
     /**
      * 用户状态，1：正常用户，2：vip用户，3：拉黑用户
      */
-    private Boolean status;
+    private int status;
 
     /**
      * 创建时间，即关注时间
@@ -85,7 +87,21 @@ public class UserEntity {
     /**
      * 删除标志，1：已删除；0：正常
      */
-    private Boolean del;
+    private int del;
+
+    public UserEntity() {
+        this.age = 0;
+        this.avatar = "";
+        this.fansCounts = 0L;
+        this.followsCounts = 0L;
+        this.receiveLikeCounts = 0L;
+        this.wxid = "";
+        this.points = 0L;
+        this.description = "";
+        this.status = 1;
+        this.del = 0;
+    }
+
 
     /**
      * 获取主键
@@ -270,19 +286,19 @@ public class UserEntity {
     /**
      * 获取用户个人介绍
      *
-     * @return desc - 用户个人介绍
+     * @return description - 用户个人介绍
      */
     public String getDesc() {
-        return desc;
+        return description;
     }
 
     /**
      * 设置用户个人介绍
      *
-     * @param desc 用户个人介绍
+     * @param description 用户个人介绍
      */
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDesc(String description) {
+        this.description = description;
     }
 
     /**
@@ -290,7 +306,7 @@ public class UserEntity {
      *
      * @return status - 用户状态，1：正常用户，2：vip用户，3：拉黑用户
      */
-    public Boolean getStatus() {
+    public int getStatus() {
         return status;
     }
 
@@ -299,7 +315,7 @@ public class UserEntity {
      *
      * @param status 用户状态，1：正常用户，2：vip用户，3：拉黑用户
      */
-    public void setStatus(Boolean status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
@@ -344,7 +360,7 @@ public class UserEntity {
      *
      * @return del - 删除标志，1：已删除；0：正常
      */
-    public Boolean getDel() {
+    public int getDel() {
         return del;
     }
 
@@ -353,7 +369,7 @@ public class UserEntity {
      *
      * @param del 删除标志，1：已删除；0：正常
      */
-    public void setDel(Boolean del) {
+    public void setDel(int del) {
         this.del = del;
     }
 }

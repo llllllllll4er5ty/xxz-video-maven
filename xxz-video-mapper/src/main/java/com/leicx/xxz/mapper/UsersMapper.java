@@ -16,4 +16,6 @@ public interface UsersMapper extends IBaseMapper<UserEntity> {
     void update(UserEntity user);
 
     UserEntity getUserByName(@Param("name") String name, @Param("del") int del);
+
+    UserEntity getUserByNameAndPwd(@Param("name")String name, @Param("password") String pwd, @Param("del") int del);
 }

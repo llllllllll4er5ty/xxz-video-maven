@@ -3,21 +3,21 @@ CREATE TABLE `users` (
   `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '主键',
 	`name` varchar(50) NOT NULL	COMMENT '用户姓名',
 	`password` varchar(50) NOT NULL	COMMENT '用户密码',
-	`age` int(6) NOT NULL COMMENT '用户年龄',
+	`age` int(6) DEFAULT 0 COMMENT '用户年龄',
 	`avatar` varchar(255) DEFAULT NULL COMMENT '用户头像',
 	`fans_counts` BIGINT(20) DEFAULT 0 COMMENT '用户粉丝数',
 	`follows_counts` BIGINT(20) DEFAULT 0 COMMENT '我关注的用户数',
 	`receive_like_counts` BIGINT(20) DEFAULT 0 COMMENT '获赞数量',
 	`wxid` varchar(50) DEFAULT NULL COMMENT '微信号',
 	`points` BIGINT(20) DEFAULT 0 COMMENT '用户积分',
-	`desc` varchar(255) DEFAULT NULL COMMENT '用户个人介绍',
+	`description` varchar(255) DEFAULT NULL COMMENT '用户个人介绍',
 	`status` TINYINT(1) DEFAULT 1 COMMENT '用户状态，1：正常用户，2：vip用户，3：拉黑用户',
   `create_time` datetime NOT NULL COMMENT '创建时间，即关注时间',
   `update_time` datetime NOT NULL COMMENT '更新时间',
   `del` tinyint(1) DEFAULT 0 COMMENT '删除标志，1：已删除；0：正常',
   PRIMARY KEY (`id`),
   KEY `idx_del` (`del`)
-) COMMENT "用户表" ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) COMMENT "用户表" ENGINE=InnoDB DEFAULT CHARSET=utf8;
 -- 视频表
 CREATE TABLE `videos` (
   `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '主键',
@@ -36,7 +36,7 @@ CREATE TABLE `videos` (
   `del` tinyint(1) DEFAULT 0 COMMENT '删除标志，1：已删除；0：正常',
   PRIMARY KEY (`id`),
   KEY `idx_del` (`del`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 -- 用户粉丝表
 CREATE TABLE `users_fans` (
   `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '主键',
@@ -47,7 +47,7 @@ CREATE TABLE `users_fans` (
   `del` tinyint(1) DEFAULT 0 COMMENT '删除标志，1：已删除；0：正常',
   PRIMARY KEY (`id`),
   KEY `idx_del` (`del`)
-) COMMENT "用户粉丝表" ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) COMMENT "用户粉丝表" ENGINE=InnoDB DEFAULT CHARSET=utf8;
 -- 用户点赞表
 CREATE TABLE `users_like_videos` (
   `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '主键',
@@ -58,7 +58,7 @@ CREATE TABLE `users_like_videos` (
   `del` tinyint(1) DEFAULT 0 COMMENT '删除标志，1：已删除；0：正常',
   PRIMARY KEY (`id`),
   KEY `idx_del` (`del`)
-) COMMENT "用户点赞表" ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) COMMENT "用户点赞表" ENGINE=InnoDB DEFAULT CHARSET=utf8;
 -- 用户举报表
 CREATE TABLE `users_report` (
   `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '主键',
@@ -71,7 +71,7 @@ CREATE TABLE `users_report` (
   `del` tinyint(1) DEFAULT 0 COMMENT '删除标志，1：已删除；0：正常',
   PRIMARY KEY (`id`),
   KEY `idx_del` (`del`)
-) COMMENT "用户举报表" ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) COMMENT "用户举报表" ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- bgm表
 CREATE TABLE `bgm` (
@@ -84,7 +84,7 @@ CREATE TABLE `bgm` (
   `del` tinyint(1) DEFAULT 0 COMMENT '删除标志，1：已删除；0：正常',
   PRIMARY KEY (`id`),
   KEY `idx_del` (`del`)
-) COMMENT "背景音乐" ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) COMMENT "背景音乐" ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- 搜索记录表
 CREATE TABLE `search_records` (
@@ -94,7 +94,7 @@ CREATE TABLE `search_records` (
   `del` tinyint(1) DEFAULT 0 COMMENT '删除标志，1：已删除；0：正常',
   PRIMARY KEY (`id`),
   KEY `idx_del` (`del`)
-) COMMENT "搜索记录表" ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) COMMENT "搜索记录表" ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- 评论表
 CREATE TABLE `comments` (
@@ -107,4 +107,4 @@ CREATE TABLE `comments` (
   `del` tinyint(1) DEFAULT 0 COMMENT '删除标志，1：已删除；0：正常',
   PRIMARY KEY (`id`),
   KEY `idx_del` (`del`)
-) COMMENT "评论表" ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) COMMENT "评论表" ENGINE=InnoDB DEFAULT CHARSET=utf8;
