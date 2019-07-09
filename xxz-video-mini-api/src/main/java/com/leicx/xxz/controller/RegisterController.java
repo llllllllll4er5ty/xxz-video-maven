@@ -2,10 +2,10 @@ package com.leicx.xxz.controller;
 
 import com.leicx.xxz.entity.UserEntity;
 import com.leicx.xxz.enums.ErrorCodeEnum;
-import com.leicx.xxz.service.RegisterService;
 import com.leicx.xxz.service.UserService;
 import com.leicx.xxz.util.LcxJSONResult;
 import com.leicx.xxz.util.StringUtils;
+import com.leicx.xxz.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/register")
 public class RegisterController {
 
-    @Autowired
-    private RegisterService registerService;
     @Autowired
     private UserService userService;
 
@@ -47,8 +45,8 @@ public class RegisterController {
         }
 
         // 保存用户信息
-        registerService.saveUser(userEntity);
+        UserVO userVO = userService.saveUser(userEntity);
         // 返回
-        return LcxJSONResult.ok(userEntity);
+        return LcxJSONResult.ok(userVO);
     }
 }

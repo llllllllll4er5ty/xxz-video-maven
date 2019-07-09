@@ -5,6 +5,7 @@ import com.leicx.xxz.enums.ErrorCodeEnum;
 import com.leicx.xxz.service.UserService;
 import com.leicx.xxz.util.LcxJSONResult;
 import com.leicx.xxz.util.StringUtils;
+import com.leicx.xxz.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,13 +36,13 @@ public class LoginController {
         }
 
         // 用户校验
-        userEntity = userService.getUserByNameAndPwd(name, password, 0);
-        boolean exists = userEntity != null;
+        UserVO userVO = userService.doLogin(userEntity);
+        boolean exists = userVO != null;
         if (!exists) {
             return LcxJSONResult.errorException(ErrorCodeEnum.ERROR_CODE_200004);
         }
 
         // 返回
-        return LcxJSONResult.ok(userEntity);
+        return LcxJSONResult.ok(userVO);
     }
 }

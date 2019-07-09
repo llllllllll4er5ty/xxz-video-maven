@@ -1,6 +1,7 @@
 package com.leicx.xxz.service;
 
 import com.leicx.xxz.entity.UserEntity;
+import com.leicx.xxz.vo.UserVO;
 
 public interface UserService {
 
@@ -61,4 +62,16 @@ public interface UserService {
      * @return true：存在；false：不存在
      */
     boolean userExistsByNameAndPwd(String name, String pwd, int del);
+    /**
+     * 用户登录，将带有token信息的用户返回
+     * @param userEntity  用户实体
+     * @return true：存在；false：不存在
+     */
+    UserVO doLogin(UserEntity userEntity);
+
+    /**
+     * 保存用户
+     * @param user 用户实体
+     */
+    UserVO saveUser(UserEntity user);
 }

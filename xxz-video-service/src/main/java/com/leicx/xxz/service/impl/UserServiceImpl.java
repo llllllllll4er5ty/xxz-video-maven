@@ -1,19 +1,25 @@
 package com.leicx.xxz.service.impl;
 
+import com.leicx.xxz.constant.SysConstant;
 import com.leicx.xxz.entity.UserEntity;
 import com.leicx.xxz.mapper.UsersMapper;
 import com.leicx.xxz.service.UserService;
 import com.leicx.xxz.util.MD5Util;
+import com.leicx.xxz.util.RedisUtils;
+import com.leicx.xxz.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
     private UsersMapper usersMapper;
+    @Autowired
+    private RedisUtils redisUtils;
 
     @Override
     public void insertUser(UserEntity user) {
@@ -58,6 +64,53 @@ public class UserServiceImpl implements UserService {
     public boolean userExistsByNameAndPwd(String name, String pwd) {
         return userExistsByNameAndPwd(name, pwd, 0);
     }
+
+    @Override
+    public UserVO doLogin(UserEntity userEntity) {
+        // TODO 参数校验
+
+        userEntity = getUserByNameAndPwd(userEntity.getName(), userEntity.getPassword(), 0);
+        UserVO userVO = null;
+        if (userEntity != null) {
+            userVO = new UserVO();
+            userVO.setUserEntity(userEntity);
+            // 利用uuid获取token信息
+            UUID uuid = UUID.randomUUID();
+            String token = uuid.toString().replaceAll("-", "");
+            userVO.setToken(token);
+
+            // 将用户token存入redis
+            redisUtils.set(SysConstant.REDIS_USER_TOKEN_KEY + ":" + userEntity.getId(), token, SysConstant.REDIS_KEY_TTL);
+        }
+        return userVO;
+    }
+
+    @Override
+    public UserVO saveUser(UserEntity user) {
+        // 用户密码加密
+        String password = user.getPassword();
+        String md5 = MD5Util.EncoderByMd5(password);
+        user.setPassword(md5);
+
+        Integer id = user.getId();
+        UserVO userVO = new UserVO();
+        userVO.setUserEntity(user);
+        if (id == null) {
+            insertUser(user);
+
+            // 利用uuid获取token信息
+            UUID uuid = UUID.randomUUID();
+            String token = uuid.toString().replaceAll("-", "");
+            userVO.setToken(token);
+
+            // 将用户token存入redis
+            redisUtils.set(SysConstant.REDIS_USER_TOKEN_KEY + ":" + user.getId(), token, SysConstant.REDIS_KEY_TTL);
+
+        } else {
+            updateUser(user);
+        }
+        return userVO;
+}
 
     @Override
     public boolean userExistsByNameAndPwd(String name, String pwd, int del) {
