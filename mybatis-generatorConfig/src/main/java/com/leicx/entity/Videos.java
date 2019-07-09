@@ -66,7 +66,7 @@ public class Videos {
     /**
      * 视频状态，(默认)1：正常，2：禁播，3：审核中
      */
-    private Boolean status;
+    private Byte status;
 
     /**
      * 创建时间，即关注时间
@@ -83,7 +83,7 @@ public class Videos {
     /**
      * 删除标志，1：已删除；0：正常
      */
-    private Boolean del;
+    private Byte del;
 
     /**
      * 获取主键
@@ -270,7 +270,7 @@ public class Videos {
      *
      * @return status - 视频状态，(默认)1：正常，2：禁播，3：审核中
      */
-    public Boolean getStatus() {
+    public Byte getStatus() {
         return status;
     }
 
@@ -279,7 +279,7 @@ public class Videos {
      *
      * @param status 视频状态，(默认)1：正常，2：禁播，3：审核中
      */
-    public void setStatus(Boolean status) {
+    public void setStatus(Byte status) {
         this.status = status;
     }
 
@@ -324,7 +324,7 @@ public class Videos {
      *
      * @return del - 删除标志，1：已删除；0：正常
      */
-    public Boolean getDel() {
+    public Byte getDel() {
         return del;
     }
 
@@ -333,7 +333,7 @@ public class Videos {
      *
      * @param del 删除标志，1：已删除；0：正常
      */
-    public void setDel(Boolean del) {
+    public void setDel(Byte del) {
         this.del = del;
     }
 }

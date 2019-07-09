@@ -38,7 +38,7 @@ public class UsersFans {
     /**
      * 删除标志，1：已删除；0：正常
      */
-    private Boolean del;
+    private Byte del;
 
     /**
      * 获取主键
@@ -135,7 +135,7 @@ public class UsersFans {
      *
      * @return del - 删除标志，1：已删除；0：正常
      */
-    public Boolean getDel() {
+    public Byte getDel() {
         return del;
     }
 
@@ -144,7 +144,7 @@ public class UsersFans {
      *
      * @param del 删除标志，1：已删除；0：正常
      */
-    public void setDel(Boolean del) {
+    public void setDel(Byte del) {
         this.del = del;
     }
 }

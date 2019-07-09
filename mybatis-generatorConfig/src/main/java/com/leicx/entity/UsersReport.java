@@ -36,7 +36,7 @@ public class UsersReport {
     private String reportDesc;
 
     /**
-     * 创建时间，即点赞时间
+     * 创建时间
      */
     @Column(name = "create_time")
     private Date createTime;
@@ -50,7 +50,7 @@ public class UsersReport {
     /**
      * 删除标志，1：已删除；0：正常
      */
-    private Boolean del;
+    private Byte del;
 
     /**
      * 获取主键
@@ -143,18 +143,18 @@ public class UsersReport {
     }
 
     /**
-     * 获取创建时间，即点赞时间
+     * 获取创建时间
      *
-     * @return create_time - 创建时间，即点赞时间
+     * @return create_time - 创建时间
      */
     public Date getCreateTime() {
         return createTime;
     }
 
     /**
-     * 设置创建时间，即点赞时间
+     * 设置创建时间
      *
-     * @param createTime 创建时间，即点赞时间
+     * @param createTime 创建时间
      */
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
@@ -183,7 +183,7 @@ public class UsersReport {
      *
      * @return del - 删除标志，1：已删除；0：正常
      */
-    public Boolean getDel() {
+    public Byte getDel() {
         return del;
     }
 
@@ -192,7 +192,7 @@ public class UsersReport {
      *
      * @param del 删除标志，1：已删除；0：正常
      */
-    public void setDel(Boolean del) {
+    public void setDel(Byte del) {
         this.del = del;
     }
 }

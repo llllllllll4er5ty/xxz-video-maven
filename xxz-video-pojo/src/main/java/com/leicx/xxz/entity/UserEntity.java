@@ -1,7 +1,5 @@
 package com.leicx.xxz.entity;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

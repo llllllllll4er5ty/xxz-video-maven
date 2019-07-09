@@ -26,7 +26,7 @@
         </commentGenerator>
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/xiaoxiong_video_dev"
+                        connectionURL="jdbc:mysql://localhost:3306/xiaoxiong_video_dev?tinyInt1isBit=false"
                         userId="root"
                         password="123456">
         </jdbcConnection>

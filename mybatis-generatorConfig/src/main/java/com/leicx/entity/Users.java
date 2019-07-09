@@ -18,6 +18,11 @@ public class Users {
     private String name;
 
     /**
+     * 用户密码
+     */
+    private String password;
+
+    /**
      * 用户年龄
      */
     private Integer age;
@@ -26,6 +31,24 @@ public class Users {
      * 用户头像
      */
     private String avatar;
+
+    /**
+     * 用户粉丝数
+     */
+    @Column(name = "fans_counts")
+    private Long fansCounts;
+
+    /**
+     * 我关注的用户数
+     */
+    @Column(name = "follows_counts")
+    private Long followsCounts;
+
+    /**
+     * 获赞数量
+     */
+    @Column(name = "receive_like_counts")
+    private Long receiveLikeCounts;
 
     /**
      * 微信号
@@ -40,12 +63,12 @@ public class Users {
     /**
      * 用户个人介绍
      */
-    private String desc;
+    private String description;
 
     /**
      * 用户状态，1：正常用户，2：vip用户，3：拉黑用户
      */
-    private Boolean status;
+    private Byte status;
 
     /**
      * 创建时间，即关注时间
@@ -62,7 +85,7 @@ public class Users {
     /**
      * 删除标志，1：已删除；0：正常
      */
-    private Boolean del;
+    private Byte del;
 
     /**
      * 获取主键
@@ -101,6 +124,24 @@ public class Users {
     }
 
     /**
+     * 获取用户密码
+     *
+     * @return password - 用户密码
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * 设置用户密码
+     *
+     * @param password 用户密码
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    /**
      * 获取用户年龄
      *
      * @return age - 用户年龄
@@ -134,6 +175,60 @@ public class Users {
      */
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    /**
+     * 获取用户粉丝数
+     *
+     * @return fans_counts - 用户粉丝数
+     */
+    public Long getFansCounts() {
+        return fansCounts;
+    }
+
+    /**
+     * 设置用户粉丝数
+     *
+     * @param fansCounts 用户粉丝数
+     */
+    public void setFansCounts(Long fansCounts) {
+        this.fansCounts = fansCounts;
+    }
+
+    /**
+     * 获取我关注的用户数
+     *
+     * @return follows_counts - 我关注的用户数
+     */
+    public Long getFollowsCounts() {
+        return followsCounts;
+    }
+
+    /**
+     * 设置我关注的用户数
+     *
+     * @param followsCounts 我关注的用户数
+     */
+    public void setFollowsCounts(Long followsCounts) {
+        this.followsCounts = followsCounts;
+    }
+
+    /**
+     * 获取获赞数量
+     *
+     * @return receive_like_counts - 获赞数量
+     */
+    public Long getReceiveLikeCounts() {
+        return receiveLikeCounts;
+    }
+
+    /**
+     * 设置获赞数量
+     *
+     * @param receiveLikeCounts 获赞数量
+     */
+    public void setReceiveLikeCounts(Long receiveLikeCounts) {
+        this.receiveLikeCounts = receiveLikeCounts;
     }
 
     /**
@@ -175,19 +270,19 @@ public class Users {
     /**
      * 获取用户个人介绍
      *
-     * @return desc - 用户个人介绍
+     * @return description - 用户个人介绍
      */
-    public String getDesc() {
-        return desc;
+    public String getDescription() {
+        return description;
     }
 
     /**
      * 设置用户个人介绍
      *
-     * @param desc 用户个人介绍
+     * @param description 用户个人介绍
      */
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     /**
@@ -195,7 +290,7 @@ public class Users {
      *
      * @return status - 用户状态，1：正常用户，2：vip用户，3：拉黑用户
      */
-    public Boolean getStatus() {
+    public Byte getStatus() {
         return status;
     }
 
@@ -204,7 +299,7 @@ public class Users {
      *
      * @param status 用户状态，1：正常用户，2：vip用户，3：拉黑用户
      */
-    public void setStatus(Boolean status) {
+    public void setStatus(Byte status) {
         this.status = status;
     }
 
@@ -249,7 +344,7 @@ public class Users {
      *
      * @return del - 删除标志，1：已删除；0：正常
      */
-    public Boolean getDel() {
+    public Byte getDel() {
         return del;
     }
 
@@ -258,7 +353,7 @@ public class Users {
      *
      * @param del 删除标志，1：已删除；0：正常
      */
-    public void setDel(Boolean del) {
+    public void setDel(Byte del) {
         this.del = del;
     }
 }
