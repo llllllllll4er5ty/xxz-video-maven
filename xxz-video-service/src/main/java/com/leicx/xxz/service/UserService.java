@@ -74,4 +74,11 @@ public interface UserService {
      * @param user 用户实体
      */
     UserVO saveUser(UserEntity user);
+
+    /**
+     * 用户登出，删除token信息
+     * @param userId
+     * @return
+     */
+    void doLogout(Integer userId);
 }

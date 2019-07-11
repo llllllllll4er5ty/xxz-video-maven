@@ -9,6 +9,7 @@ import com.leicx.xxz.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -22,7 +23,7 @@ public class LoginController {
     private UserService userService;
 
     /**
-     * 保存注册用户
+     * 用户登录
      * @param userEntity 封装了前端传入属性的用户实体
      * @return
      */
@@ -44,5 +45,23 @@ public class LoginController {
 
         // 返回
         return LcxJSONResult.ok(userVO);
+    }
+    /**
+     * 用户登出
+     * @param userId 用户id
+     * @return
+     */
+    @RequestMapping("/doLogout")
+    public LcxJSONResult doLogout(@RequestParam("userId") Integer userId) {
+        // 校验用户名和密码
+        if (userId == null) {
+            return LcxJSONResult.errorException(ErrorCodeEnum.ERROR_CODE_100002);
+        }
+
+        // 用户校验
+        userService.doLogout(userId);
+
+        // 返回
+        return LcxJSONResult.ok(null);
     }
 }

@@ -11,6 +11,7 @@ import lombok.Getter;
 public enum ErrorCodeEnum {
     // 系统级错误
     ERROR_CODE_100001(100001, "系统错误"),
+    ERROR_CODE_100002(100002, "参数错误"),
 
     // 用户级错误
     ERROR_CODE_200001(200001, "用户不能为空"),

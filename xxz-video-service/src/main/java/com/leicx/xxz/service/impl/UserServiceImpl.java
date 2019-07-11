@@ -86,6 +86,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void doLogout(Integer userId) {
+        redisUtils.del(SysConstant.REDIS_USER_TOKEN_KEY + ":" + userId);
+    }
+
+    @Override
     public UserVO saveUser(UserEntity user) {
         // 用户密码加密
         String password = user.getPassword();
