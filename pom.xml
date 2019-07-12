@@ -20,13 +20,13 @@
     </properties>
 
     <modules>
+        <module>mybatis-generatorConfig</module>
+        <module>xxz-video-config</module>
         <module>xxz-video-common</module>
         <module>xxz-video-mapper</module>
         <module>xxz-video-pojo</module>
         <module>xxz-video-service</module>
-        <module>mybatis-generatorConfig</module>
         <module>xxz-video-mini-api</module>
-        <module>xxz-video-service</module>
     </modules>
 
     <repositories>

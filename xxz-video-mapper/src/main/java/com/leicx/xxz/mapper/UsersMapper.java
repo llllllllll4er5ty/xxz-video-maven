@@ -21,6 +21,10 @@ public interface UsersMapper extends IBaseMapper<UserEntity> {
 
     UserEntity getUserByNameAndPwd(@Param("name")String name, @Param("password") String pwd, @Param("del") int del);
 
-    Date getDateById();
-    UserEntity getDateByIdIntoUser();
+    /**
+     * 根据用户id获取用户实体
+     * @param userId    用户id
+     * @return  用户实体
+     */
+    UserEntity getUserById(@Param("id") Integer userId);
 }

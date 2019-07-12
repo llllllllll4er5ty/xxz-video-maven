@@ -1,112 +1,116 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.leicx.xxz.mapper.UsersMapper">
-  <resultMap id="BaseResultMap" type="com.leicx.xxz.entity.UserEntity">
-    <!--
-      WARNING - @mbg.generated
-    -->
-    <result column="id" jdbcType="INTEGER" property="id" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="age" jdbcType="INTEGER" property="age" />
-    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
-    <result column="wxid" jdbcType="VARCHAR" property="wxid" />
-    <result column="points" jdbcType="BIGINT" property="points" />
-    <result column="description" jdbcType="VARCHAR" property="description" />
-    <result column="status" jdbcType="BIT" property="status" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" javaType="java.util.Date" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" javaType="java.util.Date" />
-    <result column="del" jdbcType="BIT" property="del" />
-  </resultMap>
+    <resultMap id="BaseResultMap" type="com.leicx.xxz.entity.UserEntity">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="age" jdbcType="INTEGER" property="age"/>
+        <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
+        <result column="wxid" jdbcType="VARCHAR" property="wxid"/>
+        <result column="points" jdbcType="BIGINT" property="points"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="status" jdbcType="BIT" property="status"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" javaType="java.util.Date"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" javaType="java.util.Date"/>
+        <result column="del" jdbcType="BIT" property="del"/>
+    </resultMap>
 
-  <insert id="insert" parameterType="com.leicx.xxz.entity.UserEntity">
-    INSERT INTO users (
-    name,password,age,avatar,fans_counts,follows_counts,receive_like_counts,wxid,points,description,status,create_time,update_time,del
-    ) VALUES (
-    #{name},#{password},#{age},#{avatar},#{fansCounts},#{followsCounts},#{receiveLikeCounts},#{wxid},#{points},#{description},#{status},#{createTime},#{updateTime},#{del}
-    )
-    <selectKey keyProperty="id" resultType="Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-  </insert>
+    <insert id="insert" parameterType="com.leicx.xxz.entity.UserEntity">
+        INSERT INTO users (
+        name,password,age,avatar,fans_counts,follows_counts,receive_like_counts,wxid,points,description,status,create_time,update_time,del
+        ) VALUES (
+        #{name},#{password},#{age},#{avatar},#{fansCounts},#{followsCounts},#{receiveLikeCounts},#{wxid},#{points},#{description},#{status},#{createTime},#{updateTime},#{del}
+        )
+        <selectKey keyProperty="id" resultType="Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
 
-  <update id="update" parameterType="com.leicx.xxz.entity.UserEntity">
-    UPDATE
-    users
-    SET
-    <if test="id!=null">id = #{id}</if>
-    <if test="name!=null">, name = #{name}</if>
-    <if test="password!=null">, password = #{password}</if>
-    <if test="age!=null">, age = #{age}</if>
-    <if test="avatar!=null">, avatar = #{avatar}</if>
-    <if test="fansCounts!=null">, fans_counts = #{fansCounts}</if>
-    <if test="followsCounts!=null">, follows_counts = #{followsCounts}</if>
-    <if test="receiveLikeCounts!=null">, receive_like_counts = #{receiveLikeCounts}</if>
-    <if test="wxid!=null">, wxid = #{wxid}</if>
-    <if test="points!=null">, points = #{points}</if>
-    <if test="description!=null">, description = #{description}</if>
-    <if test="status!=null">, status = #{status}</if>
-    <if test="createTime!=null">, create_time = #{createTime}</if>
-    <if test="updateTime!=null">, update_time = #{updateTime}</if>
-    <if test="del!=null">, del = #{del}</if>
-    <where>
-      id = #{id}
-    </where>
-  </update>
-  <select id="listByUserNameLike" resultMap="BaseResultMap">
-    SELECT * FROM
-    users
-    <where>
-      <include refid="paramColumns" />
-    </where>
-  </select>
+    <update id="update" parameterType="com.leicx.xxz.entity.UserEntity">
+        UPDATE
+        users
+        SET
+        <if test="id!=null">id = #{id}</if>
+        <if test="name!=null">, name = #{name}</if>
+        <if test="password!=null">, password = #{password}</if>
+        <if test="age!=null">, age = #{age}</if>
+        <if test="avatar!=null">, avatar = #{avatar}</if>
+        <if test="fansCounts!=null">, fans_counts = #{fansCounts}</if>
+        <if test="followsCounts!=null">, follows_counts = #{followsCounts}</if>
+        <if test="receiveLikeCounts!=null">, receive_like_counts = #{receiveLikeCounts}</if>
+        <if test="wxid!=null">, wxid = #{wxid}</if>
+        <if test="points!=null">, points = #{points}</if>
+        <if test="description!=null">, description = #{description}</if>
+        <if test="status!=null">, status = #{status}</if>
+        <if test="createTime!=null">, create_time = #{createTime}</if>
+        <if test="updateTime!=null">, update_time = #{updateTime}</if>
+        <if test="del!=null">, del = #{del}</if>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+    <select id="listByUserNameLike" resultMap="BaseResultMap">
+        SELECT
+          <include refid="insertColumns"/>
+        FROM
+          users
+        <where>
+            <include refid="paramColumns"/>
+        </where>
+    </select>
 
-  <select id="getUserByName" resultMap="BaseResultMap">
-    SELECT * FROM
-    users
-    <where>
-      name = #{name} AND del = #{del}
-    </where>
-  </select>
-  <select id="getUserByNameAndPwd" resultMap="BaseResultMap">
-    SELECT * FROM
-    users
-    <where>
-      name = #{name} AND password = #{password} AND del = #{del}
-    </where>
-  </select>
+    <select id="getUserByName" resultMap="BaseResultMap">
+        SELECT
+        <include refid="insertColumns"/>
+        FROM
+        users
+        <where>
+            name = #{name} AND del = #{del}
+        </where>
+    </select>
+    <select id="getUserByNameAndPwd" resultMap="BaseResultMap">
+        SELECT
+        <include refid="insertColumns"/>
+        FROM
+        users
+        <where>
+            name = #{name} AND password = #{password} AND del = #{del}
+        </where>
+    </select>
 
-  <!-- 测试用 -->
-  <select id="getDateById" resultType="java.util.Date">
-    SELECT create_time FROM
-    users
-    <where>
-      id = 23
-    </where>
-  </select>
-  <!-- 测试用 -->
-  <select id="getDateByIdIntoUser" resultType="com.leicx.xxz.entity.UserEntity">
-    SELECT id,create_time FROM
-    users
-    <where>
-      id = 23
-    </where>
-  </select>
 
-  <sql id="paramColumns">
-    1
-    <if test="param.nameLike!=null">
-      AND name LIKE CONCAT ('%', #{param.nameLike}, '%')
-    </if>
-    <if test="param.id!=null">
-      AND id = #{param.id}
-    </if>
-    <if test="param.del!=null">
-      AND del = #{param.del}
-    </if>
-    <if test="param.name!=null">
-      AND name = #{param.name}
-    </if>
-  </sql>
+    <select id="getUserById" resultMap="BaseResultMap">
+        SELECT
+        <include refid="insertColumns"/>
+        FROM
+        users
+        <where>
+            id = #{id}
+        </where>
+    </select>
+
+    <sql id="paramColumns">
+        1
+        <if test="param.nameLike!=null">
+            AND name LIKE CONCAT ('%', #{param.nameLike}, '%')
+        </if>
+        <if test="param.id!=null">
+            AND id = #{param.id}
+        </if>
+        <if test="param.del!=null">
+            AND del = #{param.del}
+        </if>
+        <if test="param.name!=null">
+            AND name = #{param.name}
+        </if>
+    </sql>
+
+    <sql id="insertColumns">
+        id,name,password,age,avatar,fans_counts,follows_counts,receive_like_counts,wxid,points,description,status,create_time,update_time,del
+    </sql>
 
 </mapper>

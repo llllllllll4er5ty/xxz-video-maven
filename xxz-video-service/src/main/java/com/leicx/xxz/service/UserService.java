@@ -2,6 +2,7 @@ package com.leicx.xxz.service;
 
 import com.leicx.xxz.entity.UserEntity;
 import com.leicx.xxz.vo.UserVO;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface UserService {
 
@@ -23,6 +24,12 @@ public interface UserService {
      * @return 用户实体
      */
     UserEntity getUserByName(String name, int del);
+    /**
+     * 根据用户id获取用户实体
+     * @param userId  用户id
+     * @return 用户实体
+     */
+    UserEntity getUserById(Integer userId);
 
     /**
      * 根据用户名判断用户是否存在
@@ -81,4 +88,12 @@ public interface UserService {
      * @return
      */
     void doLogout(Integer userId);
+
+    /**
+     * 上传用户头像到服务器（本地）
+     * @param userId    用户id
+     * @param files     文件数组
+     * @return string   用头头像在db中的存储路径
+     */
+    String saveUserAvatar(Integer userId, MultipartFile files);
 }

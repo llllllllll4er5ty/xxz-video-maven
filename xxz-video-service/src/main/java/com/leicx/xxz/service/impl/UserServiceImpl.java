@@ -7,9 +7,16 @@ import com.leicx.xxz.service.UserService;
 import com.leicx.xxz.util.MD5Util;
 import com.leicx.xxz.util.RedisUtils;
 import com.leicx.xxz.vo.UserVO;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Date;
 import java.util.UUID;
 
@@ -39,6 +46,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserEntity getUserByName(String name, int del) {
         return usersMapper.getUserByName(name, del);
+    }
+
+    @Override
+    public UserEntity getUserById(Integer userId) {
+        if (userId == null) {
+            return null;
+        }
+        return usersMapper.getUserById(userId);
     }
 
     @Override
@@ -88,6 +103,57 @@ public class UserServiceImpl implements UserService {
     @Override
     public void doLogout(Integer userId) {
         redisUtils.del(SysConstant.REDIS_USER_TOKEN_KEY + ":" + userId);
+    }
+
+    @Override
+    public String saveUserAvatar(Integer userId, MultipartFile files) {
+        // 本地文件路径前缀
+        String filePathPrefix = "/Users/daxiong/lcx/xxz-picture";
+        // 数据库保存的文件路径前缀
+        String fileDbPathPrefix = "/" + userId + "/";
+
+        OutputStream outputStream = null;
+        InputStream inputStream = null;
+
+        try {
+            String fileName = files.getOriginalFilename();
+            // 最终文件DB路径
+            fileDbPathPrefix += fileName;
+            // 最终文件路径
+            String finalFilePath = filePathPrefix + fileDbPathPrefix;
+            File file = new File(finalFilePath);
+            if (!file.getParentFile().exists()) {
+                file.getParentFile().mkdirs();
+            }
+            outputStream = new FileOutputStream(finalFilePath);
+            inputStream = files.getInputStream();
+            IOUtils.copy(inputStream, outputStream);
+
+            // 保存到数据库
+            UserEntity userEntity = getUserById(userId);
+            userEntity.setAvatar(fileDbPathPrefix);
+            updateUser(userEntity);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (outputStream != null) {
+                try {
+                    outputStream.flush();
+                    outputStream.close();;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (inputStream != null) {
+                try {
+                    inputStream.close();;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return fileDbPathPrefix;
     }
 
     @Override

@@ -37,6 +37,9 @@ public class LcxJSONResult {
     }
 
 
+    public static LcxJSONResult ok() {
+        return new LcxJSONResult(SUCCESS);
+    }
     public static LcxJSONResult ok(Object o) {
         return new LcxJSONResult(o);
     }

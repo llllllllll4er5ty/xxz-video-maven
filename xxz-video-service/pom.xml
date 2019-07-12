@@ -19,5 +19,18 @@
             <artifactId>xxz-video-mapper</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <!-- multiPartFile依赖 -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>5.1.8.RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+        <!-- IOUtils 依赖-->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.5</version>
+        </dependency>
     </dependencies>
 </project>

@@ -44,23 +44,6 @@ public class DateTest {
         System.out.println(d2);
     }
 
-    @Test
-    public void testDate() {
-        Date date = usersMapper.getDateById();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-        System.out.println(simpleDateFormat.format(date));
-        UserEntity userEntity = new UserEntity();
-        userEntity.setCreateTime(date);
-        System.out.println(userEntity.getCreateTime());
-    }
-    @Test
-    public void testDateUser() {
-        UserEntity user = usersMapper.getDateByIdIntoUser();
-        Date date = usersMapper.getDateById();
-        System.out.println(user.getCreateTime());
-    }
-
 }
 
 

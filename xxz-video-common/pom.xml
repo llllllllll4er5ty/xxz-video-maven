@@ -32,6 +32,13 @@
             <version>2.1.4.RELEASE</version>
         </dependency>
 
+        <!-- 依赖config层 -->
+        <dependency>
+            <groupId>com.leicx.xxz</groupId>
+            <artifactId>xxz-video-config</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
     </dependencies>
 
 </project>

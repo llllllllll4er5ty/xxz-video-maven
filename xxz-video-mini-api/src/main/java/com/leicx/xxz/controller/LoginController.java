@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 /**
  * 用户注册的controller
  */
@@ -52,7 +54,7 @@ public class LoginController {
      * @return
      */
     @RequestMapping("/doLogout")
-    public LcxJSONResult doLogout(@RequestParam("userId") Integer userId) {
+    public LcxJSONResult doLogout(@RequestParam Integer userId) {
         // 校验用户名和密码
         if (userId == null) {
             return LcxJSONResult.errorException(ErrorCodeEnum.ERROR_CODE_100002);
@@ -62,6 +64,6 @@ public class LoginController {
         userService.doLogout(userId);
 
         // 返回
-        return LcxJSONResult.ok(null);
+        return LcxJSONResult.ok();
     }
 }
