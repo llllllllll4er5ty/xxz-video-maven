@@ -27,8 +27,6 @@ public class UserController {
         }
         // 用户头像上传服务器，并保存到数据库中
         String dbPath = userService.saveUserAvatar(userId, files[0]);
-        // 静态文件路径以static开头
-        dbPath = "/static" + dbPath;
         return LcxJSONResult.ok(dbPath);
     }
 }

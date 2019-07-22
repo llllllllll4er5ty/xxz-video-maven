@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface UsersMapper extends IBaseMapper<UserEntity> {
@@ -27,4 +29,6 @@ public interface UsersMapper extends IBaseMapper<UserEntity> {
      * @return  用户实体
      */
     UserEntity getUserById(@Param("id") Integer userId);
+
+    List<UserEntity> getUserList(@Param("param") Map<String, Object> params);
 }

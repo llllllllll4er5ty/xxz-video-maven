@@ -22,7 +22,7 @@ CREATE TABLE `users` (
 CREATE TABLE `videos` (
   `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `user_id` int(10) NOT NULL COMMENT '发布者用户id',
-	`audio_id` int(10) DEFAULT NULL COMMENT '音频id，默认为null',
+	`bgm_id` int(10) DEFAULT NULL COMMENT '音频id，默认为null',
 	`video_desc` varchar(128) DEFAULT NULL COMMENT 'video描述',
 	`video_path` varchar(255) NOT NULL COMMENT 'video地址',
 	`video_seconds` FLOAT(6) NOT NULL COMMENT 'video时长',
@@ -78,6 +78,7 @@ CREATE TABLE `bgm` (
   `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `user_id` int(10) NOT NULL COMMENT '上传者用户id',
   `name` varchar(64) NOT NULL COMMENT '背景音乐名称',
+  `author` varchar(32) DEFAULT '' COMMENT '背景音乐作者',
 	`path`  varchar(255) NOT NULL COMMENT '音频地址',
   `create_time` datetime NOT NULL COMMENT '创建时间',
   `update_time` datetime NOT NULL COMMENT '更新时间',

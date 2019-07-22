@@ -4,6 +4,9 @@ import com.leicx.xxz.entity.UserEntity;
 import com.leicx.xxz.vo.UserVO;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+import java.util.Map;
+
 public interface UserService {
 
     /**
@@ -30,6 +33,12 @@ public interface UserService {
      * @return 用户实体
      */
     UserEntity getUserById(Integer userId);
+    /**
+     * 获取用户实体列表
+     * @param params  参数集合
+     * @return 用户实体
+     */
+    List<UserEntity> getUserList(Map<String, Object> params);
 
     /**
      * 根据用户名判断用户是否存在

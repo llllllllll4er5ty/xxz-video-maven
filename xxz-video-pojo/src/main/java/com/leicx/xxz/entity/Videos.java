@@ -1,8 +1,13 @@
 package com.leicx.xxz.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.Column;
 import java.util.Date;
 
+@Getter
+@Setter
 public class Videos {
     /**
      * 主键
@@ -18,8 +23,8 @@ public class Videos {
     /**
      * 音频id，默认为null
      */
-    @Column(name = "audio_id")
-    private Integer audioId;
+    @Column(name = "bgm_id")
+    private Integer bgmId;
 
     /**
      * video描述
@@ -37,7 +42,7 @@ public class Videos {
      * video时长
      */
     @Column(name = "video_seconds")
-    private Float videoSeconds;
+    private Double videoSeconds;
 
     /**
      * video宽度
@@ -66,7 +71,7 @@ public class Videos {
     /**
      * 视频状态，(默认)1：正常，2：禁播，3：审核中
      */
-    private Boolean status;
+    private Integer status;
 
     /**
      * 创建时间，即关注时间
@@ -83,7 +88,16 @@ public class Videos {
     /**
      * 删除标志，1：已删除；0：正常
      */
-    private Boolean del;
+    private Integer del;
+
+
+    public Videos() {
+        this.videoDesc = "";
+        this.coverPath = "";
+        this.likeCounts = 0L;
+        this.status = 1;
+        this.del = 0;
+    }
 
     /**
      * 获取主键
@@ -126,17 +140,17 @@ public class Videos {
      *
      * @return audio_id - 音频id，默认为null
      */
-    public Integer getAudioId() {
-        return audioId;
+    public Integer getBgmId() {
+        return bgmId;
     }
 
     /**
      * 设置音频id，默认为null
      *
-     * @param audioId 音频id，默认为null
+     * @param bgmId 音频id，默认为null
      */
-    public void setAudioId(Integer audioId) {
-        this.audioId = audioId;
+    public void setAudioId(Integer bgmId) {
+        this.bgmId = bgmId;
     }
 
     /**
@@ -173,24 +187,6 @@ public class Videos {
      */
     public void setVideoPath(String videoPath) {
         this.videoPath = videoPath;
-    }
-
-    /**
-     * 获取video时长
-     *
-     * @return video_seconds - video时长
-     */
-    public Float getVideoSeconds() {
-        return videoSeconds;
-    }
-
-    /**
-     * 设置video时长
-     *
-     * @param videoSeconds video时长
-     */
-    public void setVideoSeconds(Float videoSeconds) {
-        this.videoSeconds = videoSeconds;
     }
 
     /**
@@ -266,24 +262,6 @@ public class Videos {
     }
 
     /**
-     * 获取视频状态，(默认)1：正常，2：禁播，3：审核中
-     *
-     * @return status - 视频状态，(默认)1：正常，2：禁播，3：审核中
-     */
-    public Boolean getStatus() {
-        return status;
-    }
-
-    /**
-     * 设置视频状态，(默认)1：正常，2：禁播，3：审核中
-     *
-     * @param status 视频状态，(默认)1：正常，2：禁播，3：审核中
-     */
-    public void setStatus(Boolean status) {
-        this.status = status;
-    }
-
-    /**
      * 获取创建时间，即关注时间
      *
      * @return create_time - 创建时间，即关注时间
@@ -319,21 +297,4 @@ public class Videos {
         this.updateTime = updateTime;
     }
 
-    /**
-     * 获取删除标志，1：已删除；0：正常
-     *
-     * @return del - 删除标志，1：已删除；0：正常
-     */
-    public Boolean getDel() {
-        return del;
-    }
-
-    /**
-     * 设置删除标志，1：已删除；0：正常
-     *
-     * @param del 删除标志，1：已删除；0：正常
-     */
-    public void setDel(Boolean del) {
-        this.del = del;
-    }
 }

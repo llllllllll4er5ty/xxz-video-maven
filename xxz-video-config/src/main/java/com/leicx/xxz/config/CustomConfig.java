@@ -18,7 +18,7 @@ public class CustomConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         // 和springboot默认的静态资源文件位置同时存在
         registry.addResourceHandler("/static/**")
-                .addResourceLocations("file:/Users/daxiong/lcx/xxz-picture/");
+                .addResourceLocations("file:/Users/daxiong/lcx/xxz-static/");
     }
 }
 

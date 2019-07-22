@@ -131,6 +131,23 @@ public final class StringUtils {
         return getRandomPassword(3, passLength);
     }
 
+    /**
+     * 根据视频地址获取截图地址，.jpg后缀
+     * @author daxiong
+     * @date 2019-07-18 14:10
+     * @param inputVideoPath    视频地址
+     * @return java.lang.String 截图地址
+     **/
+    public static String getCoverPicturePath4Jpg(String inputVideoPath) {
+        if (isEmpty(inputVideoPath)) {
+            return null;
+        }
+        int splitIndex = inputVideoPath.lastIndexOf(".");
+
+        String substring = inputVideoPath.substring(0, splitIndex);
+        return substring += ".jpg";
+    }
+
     public static synchronized String getNextId() {
         sequenceId++;
         if (addrIp == null) {
@@ -225,64 +242,7 @@ public final class StringUtils {
         }
         return buf.toString();
     }
-    /**
-     * 将roleIds转为以List<String>
-     * @param roleIds 格式为|1|2|3|4|
-     * @return
-     */
-    public static List<String> roleIdToList(String roleIds) {
-        if (isEmpty(roleIds)) {
-            return null;
-        }
 
-        String roleIdArr [] = roleIds.substring(1, roleIds.length() - 1).split("\\|");
-        //获取不重复的roleId ID列表
-        Set<String> roleIdsSet = new LinkedHashSet<String>();//按顺序
-        for (String roleIdStr : roleIdArr) {
-            roleIdsSet.add(roleIdStr);
-        }
-
-        List<String> roleIdList = new ArrayList<String>(roleIdsSet);
-
-        return roleIdList;
-    }
-
-    /**
-     * 将roleIds转为以List<Integer>
-     * @param roleIds 格式为|1|2|3|4|
-     * @return
-     */
-    public static List<Integer> roleIdToListInt(String roleIds) {
-        if (isEmpty(roleIds)) {
-            return null;
-        }
-
-        String roleIdArr [] = roleIds.substring(1, roleIds.length() - 1).split("\\|");
-
-        //获取不重复的roleId ID列表
-        Set<Integer> roleIdsSet = new LinkedHashSet<Integer>();//按顺序
-        for (String roleIdStr : roleIdArr) {
-            roleIdsSet.add(Integer.valueOf(roleIdStr));
-        }
-
-        List<Integer> roleIdList = new ArrayList<Integer>(roleIdsSet);
-
-        return roleIdList;
-    }
-
-    /**
-     *
-     * @param   |1|2|3|4| 字符串 转化为list<Integer>格式
-     * @return  strings 格式为|1|2|3|4|
-     * @author chenhb
-     * @time 2016-7-14 下午3:50:27
-     */
-    public static List<Integer> toList(String strings) {
-
-        List<Integer> list = new ArrayList<Integer>();
-        list=toList(strings,"|");
-        return list;
-    }
     /**
      * @param  |1|2|3|4| 字符串 转化为list<Integer>格式
      * @return  strings 格式为|1|2|3|4|

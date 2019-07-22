@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -52,5 +53,31 @@ public class OtherTest {
         }
         long after3 = System.currentTimeMillis();
         System.out.println("linkedList用iterator循环：" + (after3 - before3));
+    }
+
+    @Test
+    public void forTest() {
+        ArrayList<Integer> arrayList = new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+            arrayList.add(Integer.valueOf(i));
+        }
+
+        // 复现方法一
+        Iterator<Integer> iterator = arrayList.iterator();
+        while (iterator.hasNext()) {
+            Integer integer = iterator.next();
+            if (integer.intValue() == 5) {
+                arrayList.remove(integer);
+            }
+        }
+
+        // 复现方法二
+        iterator = arrayList.iterator();
+        for (Integer value : arrayList) {
+            Integer integer = iterator.next();
+            if (integer.intValue() == 5) {
+                arrayList.remove(integer);
+            }
+        }
     }
 }

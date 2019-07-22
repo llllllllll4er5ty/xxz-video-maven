@@ -1,8 +1,13 @@
 package com.leicx.xxz.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.Column;
 import java.util.Date;
 
+@Getter
+@Setter
 public class Bgm {
     /**
      * 主键
@@ -19,6 +24,11 @@ public class Bgm {
      * 背景音乐名称
      */
     private String name;
+
+    /**
+     * 背景音乐作者
+     */
+    private String author;
 
     /**
      * 音频地址

@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -46,6 +48,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserEntity getUserByName(String name, int del) {
         return usersMapper.getUserByName(name, del);
+    }
+
+    @Override
+    public List<UserEntity> getUserList(Map<String, Object> params) {
+        return usersMapper.getUserList(params);
     }
 
     @Override
@@ -108,9 +115,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public String saveUserAvatar(Integer userId, MultipartFile files) {
         // 本地文件路径前缀
-        String filePathPrefix = "/Users/daxiong/lcx/xxz-picture";
+        String filePathPrefix = SysConstant.STATIC_PATH_REFIX;
         // 数据库保存的文件路径前缀
-        String fileDbPathPrefix = "/" + userId + "/";
+        String fileDbPathPrefix = "/avatar/" + userId + "/";
 
         OutputStream outputStream = null;
         InputStream inputStream = null;

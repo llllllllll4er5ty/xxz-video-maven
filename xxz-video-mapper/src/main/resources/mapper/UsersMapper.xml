@@ -92,6 +92,28 @@
             id = #{id}
         </where>
     </select>
+    <select id="getUserList" resultMap="BaseResultMap">
+        SELECT
+        <choose>
+            <when test="param.columns!=null">
+                ${param.columns}
+            </when>
+            <otherwise>
+                <include refid="insertColumns"/>
+            </otherwise>
+        </choose>
+        FROM
+          users
+        <where>
+            <include refid="paramColumns"/>
+        </where>
+        <if test="param.orderByStr!=null">
+            order by ${param.orderByStr}
+        </if>
+        <if test="param.start!=null and param.pageNum!=null">
+            LIMIT #{param.start},#{param.pageNum}
+        </if>
+    </select>
 
     <sql id="paramColumns">
         1
@@ -100,6 +122,12 @@
         </if>
         <if test="param.id!=null">
             AND id = #{param.id}
+        </if>
+        <if test="param.idIn!=null">
+            AND id IN
+            <foreach collection="param.idIn" item="item" index="index" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
         </if>
         <if test="param.del!=null">
             AND del = #{param.del}

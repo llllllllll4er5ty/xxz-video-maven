@@ -7,7 +7,7 @@
     -->
     <result column="id" property="id" jdbcType="INTEGER" />
     <result column="user_id" property="userId" jdbcType="INTEGER" />
-    <result column="audio_id" property="audioId" jdbcType="INTEGER" />
+    <result column="bgm_id" property="bgmId" jdbcType="INTEGER" />
     <result column="video_desc" property="videoDesc" jdbcType="VARCHAR" />
     <result column="video_path" property="videoPath" jdbcType="VARCHAR" />
     <result column="video_seconds" property="videoSeconds" jdbcType="REAL" />
@@ -20,4 +20,162 @@
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="del" property="del" jdbcType="BIT" />
   </resultMap>
+  <insert id="insert">
+    INSERT INTO videos (
+    user_id,bgm_id,video_desc,video_path,video_seconds,video_width,video_height,cover_path,like_counts,status,create_time,update_time,del
+    ) VALUES (
+    #{userId},#{bgmId},#{videoDesc},#{videoPath},#{videoSeconds},#{videoWidth},#{videoHeight},#{coverPath},#{likeCounts},#{status},#{createTime},#{updateTime},#{del}
+    )
+    <selectKey keyProperty="id" resultType="Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+  </insert>
+
+  <insert id="insertSelective">
+    INSERT INTO videos
+
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="bgmId != null" >
+        bgm_id,
+      </if>
+      <if test="videoDesc != null" >
+        video_desc,
+      </if>
+      <if test="videoPath != null" >
+        video_path,
+      </if>
+      <if test="videoSeconds != null" >
+        video_seconds,
+      </if>
+      <if test="videoWidth != null" >
+        video_width,
+      </if>
+      <if test="videoHeight != null" >
+        video_height,
+      </if>
+      <if test="coverPath != null" >
+        cover_path,
+      </if>
+      <if test="likeCounts != null" >
+        like_counts,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="del != null" >
+        del,
+      </if>
+    </trim>
+
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId},
+      </if>
+      <if test="bgmId != null" >
+        #{bgmId},
+      </if>
+      <if test="videoDesc != null" >
+        #{videoDesc},
+      </if>
+      <if test="videoPath != null" >
+        #{videoPath},
+      </if>
+      <if test="videoSeconds != null" >
+        #{videoSeconds},
+      </if>
+      <if test="videoWidth != null" >
+        #{videoWidth},
+      </if>
+      <if test="videoHeight != null" >
+        #{videoHeight},
+      </if>
+      <if test="coverPath != null" >
+        #{coverPath},
+      </if>
+      <if test="likeCounts != null" >
+        #{likeCounts},
+      </if>
+      <if test="status != null" >
+        #{status},
+      </if>
+      <if test="createTime != null" >
+        #{createTime},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime},
+      </if>
+      <if test="del != null" >
+        #{del},
+      </if>
+    </trim>
+
+    <selectKey keyProperty="id" resultType="Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+  </insert>
+
+  <select id="list" parameterType="map" resultMap="BaseResultMap">
+    SELECT
+    <choose>
+      <when test="param.columns!=null">
+        ${param.columns}
+      </when>
+      <otherwise>
+        <include refid="insertColumns"/>
+      </otherwise>
+
+    </choose>
+    FROM videos
+    <where>
+      <include refid="paramColumns"/>
+    </where>
+    <if test="param.orderByStr!=null">
+      order by ${param.orderByStr}
+    </if>
+    <if test="param.start!=null and param.pageNum!=null">
+      LIMIT #{param.start},#{param.pageNum}
+    </if>
+
+  </select>
+
+  <sql id="paramColumns">
+    1
+    <if test="param.nameLike!=null">
+      AND name LIKE CONCAT ('%', #{param.nameLike}, '%')
+    </if>
+    <if test="param.id!=null">
+      AND id = #{param.id}
+    </if>
+    <if test="param.userId!=null">
+      AND user_id = #{param.userId}
+    </if>
+    <if test="param.idIn!=null">
+      AND id IN
+      <foreach collection="param.idIn" index="index" item="item" open="(" close=")" separator=",">
+        #{item}
+      </foreach>
+    </if>
+    <if test="param.status!=null">
+      AND status = #{param.status}
+    </if>
+    <if test="param.del!=null">
+      AND del = #{param.del}
+    </if>
+    <if test="param.name!=null">
+      AND name = #{param.name}
+    </if>
+  </sql>
+
+  <sql id="insertColumns">
+    id,user_id,bgm_id,video_desc,video_path,video_seconds,video_width,video_height,cover_path,like_counts,status,create_time,update_time,del
+  </sql>
 </mapper>

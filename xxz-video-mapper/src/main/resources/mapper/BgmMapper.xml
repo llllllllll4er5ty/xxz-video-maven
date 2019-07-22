@@ -13,4 +13,75 @@
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="del" property="del" jdbcType="BIT" />
   </resultMap>
+  <insert id="insert">
+    INSERT INTO users (
+      user_id,name,author,path,create_time,update_time,del
+    ) VALUES (
+      #{userId},#{name},#{author},#{path},#{createTime},#{updateTime},#{del}
+    )
+    <selectKey keyProperty="id" resultType="Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+  </insert>
+
+  <select id="list" parameterType="map" resultMap="BaseResultMap">
+    SELECT
+    <choose>
+      <when test="param.columns!=null">
+        ${param.columns}
+      </when>
+      <otherwise>
+        <include refid="insertColumns"/>
+      </otherwise>
+
+    </choose>
+    FROM bgm
+    <where>
+      <include refid="paramColumns"/>
+    </where>
+    <if test="param.orderByStr!=null">
+      order by ${param.orderByStr}
+    </if>
+    <if test="param.start!=null and param.pageNum!=null">
+      LIMIT #{param.start},#{param.pageNum}
+    </if>
+
+  </select>
+
+  <select id="getBgmById" resultMap="BaseResultMap">
+    SELECT
+      <include refid="insertColumns"/>
+    FROM bgm
+    <where>
+      id = #{id}
+    </where>
+
+  </select>
+
+  <sql id="paramColumns">
+    1
+    <if test="param.nameLike!=null">
+      AND name LIKE CONCAT ('%', #{param.nameLike}, '%')
+    </if>
+    <if test="param.id!=null">
+      AND id = #{param.id}
+    </if>
+    <if test="param.idIn!=null">
+      AND id IN
+      <foreach collection="param.idIn" index="index" item="item" open="(" close=")" separator=",">
+         #{item}
+      </foreach>
+    </if>
+    <if test="param.del!=null">
+      AND del = #{param.del}
+    </if>
+    <if test="param.name!=null">
+      AND name = #{param.name}
+    </if>
+  </sql>
+
+  <sql id="insertColumns">
+    id,user_id,name,author,path,create_time,update_time,del
+  </sql>
+
 </mapper>
