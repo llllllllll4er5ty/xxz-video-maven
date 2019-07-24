@@ -8,9 +8,133 @@
     <result column="id" property="id" jdbcType="INTEGER" />
     <result column="video_id" property="videoId" jdbcType="INTEGER" />
     <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="father_id" property="fatherId" jdbcType="INTEGER" />
+    <result column="to_user_id" property="toUserId" jdbcType="INTEGER" />
     <result column="comment" property="comment" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="del" property="del" jdbcType="BIT" />
   </resultMap>
+
+  <insert id="insertSelective">
+    INSERT INTO comments
+
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="videoId != null" >
+        video_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="comment != null" >
+        comment,
+      </if>
+      <if test="fatherId != null" >
+        father_id,
+      </if>
+      <if test="toUserId != null" >
+        to_user_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="del != null" >
+        del,
+      </if>
+    </trim>
+
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="videoId != null" >
+        #{videoId},
+      </if>
+      <if test="userId != null" >
+        #{userId},
+      </if>
+      <if test="comment != null" >
+        #{comment},
+      </if>
+      <if test="fatherId != null" >
+        #{fatherId},
+      </if>
+      <if test="toUserId != null" >
+        #{toUserId},
+      </if>
+      <if test="createTime != null" >
+        #{createTime},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime},
+      </if>
+      <if test="del != null" >
+        #{del},
+      </if>
+    </trim>
+
+    <selectKey keyProperty="id" resultType="Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+  </insert>
+
+  <select id="getCommentsList" parameterType="map" resultMap="BaseResultMap">
+    SELECT
+    <choose>
+      <when test="param.columns!=null">
+        ${param.columns}
+      </when>
+      <otherwise>
+        <include refid="insertColumns"/>
+      </otherwise>
+
+    </choose>
+    FROM comments
+    <where>
+      <include refid="paramColumns"/>
+    </where>
+    <if test="param.orderByStr!=null">
+      order by ${param.orderByStr}
+    </if>
+    <if test="param.start!=null and param.pageNum!=null">
+      LIMIT #{param.start},#{param.pageNum}
+    </if>
+
+  </select>
+
+  <sql id="paramColumns">
+    1
+    <if test="param.id!=null">
+      AND id = #{param.id}
+    </if>
+    <if test="param.userId!=null">
+      AND user_id = #{param.userId}
+    </if>
+    <if test="param.videoId!=null">
+      AND video_id = #{param.videoId}
+    </if>
+    <if test="param.idIn!=null">
+      AND id IN
+      <foreach collection="param.idIn" index="index" item="item" open="(" close=")" separator=",">
+        #{item}
+      </foreach>
+    </if>
+    <if test="param.videoIdIn!=null">
+      AND video_id IN
+      <foreach collection="param.videoIdIn" index="index" item="item" open="(" close=")" separator=",">
+        #{item}
+      </foreach>
+    </if>
+    <if test="param.del!=null">
+      AND del = #{param.del}
+    </if>
+    <if test="param.name!=null">
+      AND name = #{param.name}
+    </if>
+  </sql>
+
+  <sql id="insertColumns">
+    id,user_id,video_id,father_id,to_user_id,comment,create_time,update_time,del
+  </sql>
+
 </mapper>

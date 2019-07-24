@@ -1,8 +1,13 @@
 package com.leicx.xxz.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.Column;
 import java.util.Date;
 
+@Getter
+@Setter
 public class Comments {
     /**
      * 主键
@@ -20,6 +25,18 @@ public class Comments {
      */
     @Column(name = "user_id")
     private Integer userId;
+
+    /**
+     * 父评论id
+     */
+    @Column(name = "father_id")
+    private Integer fatherId;
+
+    /**
+     * 被评论用户id
+     */
+    @Column(name = "to_user_id")
+    private Integer toUserId;
 
     /**
      * 评论内容

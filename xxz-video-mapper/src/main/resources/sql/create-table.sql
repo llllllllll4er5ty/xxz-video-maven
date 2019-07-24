@@ -102,6 +102,8 @@ CREATE TABLE `comments` (
   `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `video_id` int(10) NOT NULL COMMENT '视频id',
 	`user_id` int(10) NOT NULL COMMENT '用户id',
+	`father_id` int(10) DEFAULT NULL COMMENT '父评论id',
+	`to_user_id` int(10) DEFAULT NULL COMMENT '被评论用户id',
 	`comment` varchar(500) NOT NULL COMMENT '评论内容',
 	`create_time` datetime NOT NULL COMMENT '创建时间',
   `update_time` datetime NOT NULL COMMENT '更新时间',

@@ -20,5 +20,13 @@ public class ParamConstant {
      * 排序字段
      */
     public static final String ORDER_BY_STR = "orderByStr";
+    /**
+     * idIn
+     */
+    public static final String ID_IN = "idIn";
+    /**
+     * 查询的列名
+     */
+    public static final String COLUMNS = "columns";
 
 }
