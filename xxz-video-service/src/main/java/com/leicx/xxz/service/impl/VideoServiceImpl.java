@@ -8,6 +8,7 @@ import com.leicx.xxz.dto.video.VideoUploadDTO;
 import com.leicx.xxz.entity.Bgm;
 import com.leicx.xxz.entity.UserEntity;
 import com.leicx.xxz.entity.Videos;
+import com.leicx.xxz.entity.ext.VideoExt;
 import com.leicx.xxz.enums.VideoStatusEnum;
 import com.leicx.xxz.mapper.VideosMapper;
 import com.leicx.xxz.service.BgmService;
@@ -16,7 +17,6 @@ import com.leicx.xxz.service.VideoService;
 import com.leicx.xxz.util.FfmpegUtil;
 import com.leicx.xxz.util.MapUtil;
 import com.leicx.xxz.util.StringUtils;
-import com.leicx.xxz.entity.ext.VideoExt;
 import com.leicx.xxz.vo.video.VideoListVO;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.BeanUtils;
@@ -83,10 +83,11 @@ public class VideoServiceImpl implements VideoService {
         pageNum = pageNum == null ? 5 : pageNum;
 
         Map<String, Object> params = new HashMap<>(SysConstant.COLLECTION_DEFAULT_CAPACITY);
+        String orderByStr = null;
         if (StringUtils.isNotEmpty(orderStr) && StringUtils.isNotEmpty(orderType)) {
-            String orderByStr = orderStr + orderType;
-            MapUtil.addToMap(params, "orderByStr", orderByStr);
+            orderByStr = orderStr + orderType;
         }
+        MapUtil.addToMap(params, "orderByStr", orderByStr, "update_time desc");
         MapUtil.addToMap(params, "userId", userId);
         MapUtil.addToMap(params, "status", status, VideoStatusEnum.NORMAL.getCode());
         params.put("del", 0);

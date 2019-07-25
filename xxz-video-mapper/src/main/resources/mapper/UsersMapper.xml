@@ -10,6 +10,9 @@
         <result column="password" jdbcType="VARCHAR" property="password"/>
         <result column="age" jdbcType="INTEGER" property="age"/>
         <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
+        <result column="fans_counts" jdbcType="BIGINT" property="fansCounts"/>
+        <result column="follows_counts" jdbcType="BIGINT" property="followsCounts"/>
+        <result column="receive_like_counts" jdbcType="BIGINT" property="receiveLikeCounts"/>
         <result column="wxid" jdbcType="VARCHAR" property="wxid"/>
         <result column="points" jdbcType="BIGINT" property="points"/>
         <result column="description" jdbcType="VARCHAR" property="description"/>
@@ -34,8 +37,7 @@
         UPDATE
         users
         SET
-        <if test="id!=null">id = #{id}</if>
-        <if test="name!=null">, name = #{name}</if>
+        <if test="name!=null"> name = #{name}</if>
         <if test="password!=null">, password = #{password}</if>
         <if test="age!=null">, age = #{age}</if>
         <if test="avatar!=null">, avatar = #{avatar}</if>

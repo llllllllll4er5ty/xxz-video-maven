@@ -1,5 +1,8 @@
 package com.leicx.xxz.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -142,6 +145,7 @@ public class UserEntity {
      *
      * @return password - 用户密码
      */
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
@@ -151,6 +155,7 @@ public class UserEntity {
      *
      * @param password 用户密码
      */
+    @JsonProperty
     public void setPassword(String password) {
         this.password = password;
     }

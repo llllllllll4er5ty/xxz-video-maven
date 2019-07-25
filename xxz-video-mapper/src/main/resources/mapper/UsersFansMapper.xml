@@ -12,4 +12,69 @@
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="del" property="del" jdbcType="BIT" />
   </resultMap>
+  <insert id="insertSelective">
+    INSERT INTO users_fans
+
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="fanId != null" >
+        fan_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="del != null" >
+        del,
+      </if>
+    </trim>
+
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId},
+      </if>
+      <if test="fanId != null" >
+        #{fanId},
+      </if>
+      <if test="createTime != null" >
+        #{createTime},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime},
+      </if>
+      <if test="del != null" >
+        #{del},
+      </if>
+    </trim>
+
+    <selectKey keyProperty="id" resultType="Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+  </insert>
+
+  <update id="updateSelective">
+    UPDATE users_fans
+    SET
+
+    <if test="del != null" >
+      del = #{del},
+    </if>
+    <if test="updateTime != null" >
+      update_time = #{updateTime}
+    </if>
+    WHERE
+    id = #{id}
+
+  </update>
+
+  <select id="getByUserIdAndFanId" resultMap="BaseResultMap">
+    SELECT * FROM users_fans
+    WHERE
+      user_id = #{userId} AND fan_id = #{fanId}
+  </select>
+
 </mapper>

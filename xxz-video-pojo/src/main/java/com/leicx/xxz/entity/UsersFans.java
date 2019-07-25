@@ -1,10 +1,15 @@
 package com.leicx.xxz.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.Column;
 import javax.persistence.Table;
 import java.util.Date;
 
 @Table(name = "users_fans")
+@Getter
+@Setter
 public class UsersFans {
     /**
      * 主键
@@ -38,7 +43,7 @@ public class UsersFans {
     /**
      * 删除标志，1：已删除；0：正常
      */
-    private Boolean del;
+    private Integer del;
 
     /**
      * 获取主键
@@ -130,21 +135,4 @@ public class UsersFans {
         this.updateTime = updateTime;
     }
 
-    /**
-     * 获取删除标志，1：已删除；0：正常
-     *
-     * @return del - 删除标志，1：已删除；0：正常
-     */
-    public Boolean getDel() {
-        return del;
-    }
-
-    /**
-     * 设置删除标志，1：已删除；0：正常
-     *
-     * @param del 删除标志，1：已删除；0：正常
-     */
-    public void setDel(Boolean del) {
-        this.del = del;
-    }
 }

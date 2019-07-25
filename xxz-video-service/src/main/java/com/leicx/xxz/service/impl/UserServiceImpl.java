@@ -1,10 +1,15 @@
 package com.leicx.xxz.service.impl;
 
+import com.leicx.xxz.constant.ParamConstant;
 import com.leicx.xxz.constant.SysConstant;
 import com.leicx.xxz.entity.UserEntity;
+import com.leicx.xxz.entity.UsersFans;
+import com.leicx.xxz.mapper.UsersFansMapper;
 import com.leicx.xxz.mapper.UsersMapper;
 import com.leicx.xxz.service.UserService;
+import com.leicx.xxz.service.UsersFansService;
 import com.leicx.xxz.util.MD5Util;
+import com.leicx.xxz.util.MapUtil;
 import com.leicx.xxz.util.RedisUtils;
 import com.leicx.xxz.vo.UserVO;
 import org.apache.commons.io.IOUtils;
@@ -17,7 +22,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -29,6 +36,8 @@ public class UserServiceImpl implements UserService {
     private UsersMapper usersMapper;
     @Autowired
     private RedisUtils redisUtils;
+    @Autowired
+    private UsersFansService usersFansService;
 
     @Override
     public void insertUser(UserEntity user) {
@@ -113,6 +122,61 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean isFollow(Integer userId, Integer followUserId) {
+        UsersFans usersFans = usersFansService.getByUserIdAndFanId(userId, followUserId);
+        return usersFans != null && usersFans.getDel() != 1;
+    }
+
+    @Override
+    public UserEntity unFollowUser(Integer userId, Integer followUserId) {
+        usersFansService.cancelFollow(userId, followUserId);
+
+        return setUserFollowFan(userId, followUserId, -1);
+    }
+
+    /**
+     * 更改用户的关注数和粉丝数
+     * @param userId
+     * @param followUserId
+     * @param mark  1：粉丝数、关注数+1；   -1：粉丝数、关注数-1
+     * @return
+     */
+    public UserEntity setUserFollowFan(Integer userId, Integer followUserId, Integer mark) {
+        Map<String, Object> param = new HashMap<>(SysConstant.COLLECTION_DEFAULT_CAPACITY);
+        MapUtil.addToMap(param, ParamConstant.ID_IN, Arrays.asList(userId, followUserId));
+        List<UserEntity> userList = getUserList(param);
+        Map<Integer, UserEntity> userMap = new HashMap<>(SysConstant.COLLECTION_DEFAULT_CAPACITY);
+        userList.forEach(item -> userMap.put(item.getId(), item));
+        // 被关注用户粉丝数减少
+        UserEntity followUser = userMap.get(userId);
+        Long fansCounts = followUser.getFansCounts();
+        followUser.setFansCounts(fansCounts + mark);
+        saveUser(followUser);
+
+        // 粉丝用户关注数减少
+        UserEntity fansUser = userMap.get(followUserId);
+        Long followsCounts = fansUser.getFollowsCounts();
+        fansUser.setFollowsCounts(followsCounts + mark);
+        saveUser(fansUser);
+        return followUser;
+    }
+
+    @Override
+    public UserEntity followUser(Integer userId, Integer followUserId) {
+        UsersFans usersFans = usersFansService.getByUserIdAndFanId(userId, followUserId);
+        if (usersFans != null) {
+            usersFans.setDel(0);
+        } else {
+            usersFans = new UsersFans();
+            usersFans.setUserId(userId);
+            usersFans.setFanId(followUserId);
+        }
+        usersFansService.saveUsersFans(usersFans);
+
+        return setUserFollowFan(userId, followUserId, 1);
+    }
+
+    @Override
     public String saveUserAvatar(Integer userId, MultipartFile files) {
         // 本地文件路径前缀
         String filePathPrefix = SysConstant.STATIC_PATH_REFIX;
@@ -165,15 +229,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserVO saveUser(UserEntity user) {
-        // 用户密码加密
-        String password = user.getPassword();
-        String md5 = MD5Util.EncoderByMd5(password);
-        user.setPassword(md5);
-
         Integer id = user.getId();
         UserVO userVO = new UserVO();
         userVO.setUserEntity(user);
+
         if (id == null) {
+            // 用户密码加密
+            String password = user.getPassword();
+            String md5 = MD5Util.EncoderByMd5(password);
+            user.setPassword(md5);
             insertUser(user);
 
             // 利用uuid获取token信息

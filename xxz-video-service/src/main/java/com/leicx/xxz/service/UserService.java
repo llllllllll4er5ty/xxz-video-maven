@@ -105,4 +105,32 @@ public interface UserService {
      * @return string   用头头像在db中的存储路径
      */
     String saveUserAvatar(Integer userId, MultipartFile files);
+
+    /**
+     * 关注用户
+     * @author daxiong
+     * @date 2019-07-25 15:14
+     * @param userId    被关注用户的id
+     * @param followUserId  关注者id
+     * @return UserEntity 被关注用户实体
+     **/
+    UserEntity followUser(Integer userId, Integer followUserId);
+    /**
+     * 取消关注用户
+     * @author daxiong
+     * @date 2019-07-25 15:14
+     * @param userId    被关注用户的id
+     * @param followUserId  关注者id
+     * @return UserEntity 被关注用户实体
+     **/
+    UserEntity unFollowUser(Integer userId, Integer followUserId);
+    /**
+     * 判断是否已经关注
+     * @author daxiong
+     * @date 2019-07-25 15:14
+     * @param userId    被关注用户的id
+     * @param followUserId  关注者id
+     * @return UserEntity 被关注用户实体
+     **/
+    boolean isFollow(Integer userId, Integer followUserId);
 }
